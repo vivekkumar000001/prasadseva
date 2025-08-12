@@ -61,7 +61,7 @@ const Footer = () => {
               <FaInstagram size={22} />
             </a>
             <a
-              href="#"
+              href="https://www.youtube.com/@fxrocky003"
               className="text-gray-300 hover:text-red-600 hover:scale-110 transition duration-300"
             >
               <FaYoutube size={22} />
@@ -79,3 +79,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
