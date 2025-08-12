@@ -18,7 +18,7 @@ const Contact = () => {
             icon={<FaEnvelope size={24} className="mr-2" />} 
             title="Email Support"
             items={[
-              { label: 'General inquiries', value: 'support@prasadseva.com' },
+              { label: 'General inquiries', value: 'prasadseva01@gmail.com' },
               { label: 'Account issues', value: 'accounts@prasadseva.com' }
             ]}
           />
@@ -123,5 +123,6 @@ const ContactCard = ({ icon, title, items, description, button }) => {
     </div>
   );
 };
+
 
 export default Contact;
