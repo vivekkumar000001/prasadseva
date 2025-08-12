@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart, FaHeart, FaRupeeSign, FaStar, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart, FaHeart, FaRupeeSign, FaStar, FaTimes, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 // Replace these paths with your actual image paths
@@ -25,8 +25,9 @@ const Home = () => {
   const [cartCount, setCartCount] = useState(3);
   const [favorites, setFavorites] = useState([]);
   
-  // Ad video state - timer removed
+  // Ad video state with mute control
   const [showAdVideo, setShowAdVideo] = useState(true);
+  const [isMuted, setIsMuted] = useState(true); // Start muted to allow autoplay
   const videoRef = useRef(null);
   
   // Famous temples data with real images
@@ -159,6 +160,11 @@ const Home = () => {
     setShowAdVideo(false);
   };
 
+  // Toggle mute/unmute
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {/* Hero Section */}
@@ -214,24 +220,33 @@ const Home = () => {
         </div>
       </section>
 
-      {/* VIDEO SECTION - CENTERED ON PAGE */}
+      {/* VIDEO SECTION WITH AUDIO CONTROL */}
       {showAdVideo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
           <div className="relative w-full max-w-4xl mx-4">
-            {/* Close button at top right corner */}
+            {/* Mute button at top left */}
+            <button 
+              onClick={toggleMute}
+              className="absolute top-4 left-4 z-50 text-white bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center hover:bg-opacity-75 transition-colors duration-300 shadow-lg"
+              aria-label={isMuted ? "Unmute" : "Mute"}
+            >
+              {isMuted ? <FaVolumeMute className="text-xl" /> : <FaVolumeUp className="text-xl" />}
+            </button>
+            
+            {/* Close button at top right */}
             <button 
               onClick={closeAd}
-              className="absolute -top-4 -right-4 z-50 text-white bg-red-500 rounded-full w-12 h-12 flex items-center justify-center hover:bg-red-600 transition-colors duration-300 shadow-lg"
+              className="absolute top-4 right-4 z-50 text-white bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center hover:bg-opacity-75 transition-colors duration-300 shadow-lg"
               aria-label="Close advertisement"
             >
-              <FaTimes className="text-2xl" />
+              <FaTimes className="text-xl" />
             </button>
             
             {/* Video player */}
             <video
               ref={videoRef}
               autoPlay
-              muted
+              muted={isMuted}
               playsInline
               className="w-full h-auto rounded-xl shadow-2xl"
             >
@@ -242,7 +257,9 @@ const Home = () => {
             {/* Video caption */}
             <div className="mt-4 text-center">
               <p className="text-white text-lg font-medium">Advertisement</p>
-              <p className="text-gray-300 text-sm mt-1">Click the X button to close</p>
+              <p className="text-gray-300 text-sm mt-1">
+                {isMuted ? "Audio is muted" : "Audio is playing"} - Click speaker to {isMuted ? "unmute" : "mute"}
+              </p>
             </div>
           </div>
         </div>
